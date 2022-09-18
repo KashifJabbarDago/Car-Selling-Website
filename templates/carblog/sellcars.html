@@ -1,0 +1,76 @@
+{% extends 'Basic.html' %}
+{% block title %} Sell cars{% endblock title %}
+
+{% block body %}
+
+{% if user.is_authenticated %}
+<div class="container mt-4">
+    <div class="row">
+            <h2 class="display-6">Upload your car selling details</h2>
+            <div class="col-md-6">
+            <form action="/sellcar/" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form.as_p}}
+                  <div class="form-group">
+                    <label for="category">Enter your car category</label>
+                    <input type="text" class="form-control" id="category" name="category" aria-describedby="name">
+                  </div>
+                
+                  <div class="form-group">
+                    <label for="carname">Enter your car name</label>
+                    <input type="text" class="form-control" id="carname" name="carname" aria-describedby="carname">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="carmodel">Enter your car model</label>
+                    <input type="text" class="form-control" id="carmodel" name="carmodel" aria-describedby="carmodel">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="carcolor">Type in your car color</label>
+                    <input type="text" class="form-control" id="carcolor" name="carcolor" aria-describedby="carcolor">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="ownername">Enter your name</label>
+                    <input type="text" class="form-control" id="ownername" name="ownername" aria-describedby="ownername">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="phone">Enter your phone number</label>
+                    <input type="tel" class="form-control" id="phone" name="phone">
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="msg">Enter your address</label>
+                    <textarea class="form-control" name="msg" id="msg" cols="10" rows="5"></textarea>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="carprice">Enter your car price</label>
+                    <input type="text" class="form-control" id="carprice" name="carprice" aria-describedby="carprice">
+                  </div>
+                  <div class="form-group">
+                    <label for="pubdate">Enter date</label>
+                    <input type="date" class="form-control" id="pubdate" name="pubdate" aria-describedby="pubdate">
+                  </div>
+                  <div class="form-group">
+                    <label for="carimage">Upload your car images</label>
+                    <input type="file" class="form-control" id="carimage" name="carimage" aria-describedby="carimage">
+                  </div>
+
+                  <button type="submit" class="btn btn-dark my-2 px-5">Submit</button>
+                </form>
+    </div>
+</div>
+
+{% else %}
+<div class="container text-center mt-5" >
+  <div class="row">
+    <h1>Login Required to sell your cars</h1>
+  </div>
+</div>
+{% endif %}
+{% endblock body %}

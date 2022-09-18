@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock title %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <style>
+        {% block style %}
+        {% endblock style %}
+        .container .nav-img{
+            width:80px;
+            height:60px;
+            
+        }
+        .container .nav-img img{
+            width:100%;
+            height:100%;
+            object-fit:contain;
+            border-radius:150px;
+        }
+    </style>
+  </head>
+  <body>
+    {% load static %}
+    <header class="p-3 text-bg-dark ">
+        <div class="container">
+          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+               <div class="nav-img">
+                <img src="{% static 'logos/logo.jpg' %}" alt="Image not found" class="bi me-2">
+               </div>
+            </a>
+    
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-space-between mb-md-0">
+              <li><a href="/" class="nav-link px-2 text-secondary">Home</a></li>
+              <li><a href="/carblog" class="nav-link px-2 text-white">Available Cars</a></li>
+              <li><a href="/sellcar" class="nav-link px-2 text-white">Sell your Car</a></li>
+              <li><a href="/about" class="nav-link px-2 text-white">About</a></li>
+              <li><a href="/contact" class="nav-link px-2 text-white">Contact</a></li>
+            </ul>
+            
+            
+            {% if user.is_authenticated %}
+            <button class="btn btn-primary mx-1 "> Welcome {{request.user}}</button>
+            <a href="/logout/" class="btn btn-outline-primary"> Logout </a>
+            {% else %}
+            <div class="text-end">
+              <a href="" type="button" class="btn btn-outline-light me-2 ml-auto" data-bs-toggle="modal" data-bs-target="#loginModel" style="text-align:right;margin-left:auto;">Login</a>
+              <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#signupModel">Sign-up</button>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </header>
+      <!-- Button trigger modal -->
+      {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show m-0" role="alert">
+        <strong>Message!</strong> {{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endfor %}
+
+
+  <!-- SignUp Modal -->
+  <div class="modal fade" id="signupModel" tabindex="-1" aria-labelledby="signupModel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="signupModel">Signup Here
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+             <form method="post" action="/signup/"> <!--/"-->
+               {% csrf_token %} 
+               <div class="row ">
+                 <div class="col-sm-12">
+                   <label for="username" class="col-sm-5 col-form-label">User Name</label>
+                   <input type="text" class="form-control" id="Username" name="username" placeholder="Enter User name" Required>
+                 </div>
+                </div>
+              </div>
+       <div class="modal-body">
+           <div class="row mb-1">
+             <div class="col-sm-12">
+               <label for="fname" class="col-sm-5 col-form-label">First Name</label>
+               <input type="text" class="form-control" id="fname" name="fname" placeholder="Enter First Name"Required>
+             </div>
+           </div>
+           <div class="row mb-1">
+             <div class="col-sm-12">
+             <label for="lname" class="col-sm-5 col-form-label">Last Name</label>
+             <input type="text" class="form-control" id="lname" name="lname" placeholder="Enter Last Name"Required>
+           </div>
+           </div>
+           <div class="row mb-1">
+             <div class="col-sm-12">
+               <label for="email" class="col-sm-5 col-form-label">Email</label>
+               <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email"Required>
+             </div>
+           </div>
+           <div class="row mb-1">
+             <div class="col-sm-12">
+               <label for="password1" class="col-sm-5 col-form-label">Password</label>
+               <input type="password" class="form-control" id="password1" name="password1" placeholder="Enter Password"Required>
+             </div>
+           </div>
+           <div class="row mb-1">
+             <div class="col-sm-12">
+             <label for="password2" class="col-sm-5 col-form-label">Confirm Password</label>
+               <input type="password" class="form-control" id="password2" name="password2" placeholder="Confirm Password" Required>
+             </div>
+           </div>
+           <button type="submit" class="btn btn-primary">Submit</button>
+         </form>
+       </div>
+       <div class="modal-footer">
+       </div>
+     </div>
+   </div>
+ </div>
+      <!--Model end here -->
+  <!--login Model-->
+
+<!-- Login Modal -->
+<div class="modal fade" id="loginModel" tabindex="-1" aria-labelledby="loginModel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModel">Login Here
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        <form method='post' action='/login/'>
+          <div class="row mb-1">
+            <div class="col-sm-12">
+              <label for="loginusername" class="col-sm-5 col-form-label">Username</label>
+              <input type="text" class="form-control" id="loginusername" name="loginusername" placeholder="Enter First User Name " Required>
+            </div>
+          </div>
+          <div class="row mb-1">
+            <div class="col-sm-12">
+            <label for="loginpass" class="col-sm-5 col-form-label">Password</label>
+              <input type="password" class="form-control" id="loginpass" name="loginpass" placeholder="Enter Password" Required>
+            </div>
+          </div>
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+  </div>
+  <!--Login model ends here-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    {% block body %}{% endblock body %}
+    <script>
+        {% block script %}{% endblock script %}
+    </script>
+
+   <div class="container">
+    <footer class="align-items-end align-text-bottom fixed-bottom">
+      <hr class="m-0" >
+        <p class="text-center text-muted pt-2 ">© 2022 Company, Inc</p>
+  </footer>
+   </div>
+  </body>
+</html>

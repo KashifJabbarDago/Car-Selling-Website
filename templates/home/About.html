@@ -1,0 +1,25 @@
+{% extends 'Basic.html' %}
+{% block title %} About one{% endblock title %}
+{% block body %}
+{% if user.is_authenticated %}
+<div class="container mt-5">
+    <div class="row">
+        <h1 class="display-5">Welcome to us </h1>
+        <p class="lead">We are Pakistan base company which provides 
+            all types of old model and new model cars which are currently running in market and we help to ensure 
+            our customer that we are available 24 hours from monday to friday you can reach us through this 
+            website or you can also visit our on-site platform which is at Sindh, Hyderabad, Qasimabad phase1, sparks Cars
+            company, we'll reach to us as we if receive any query from our respectful customers or you can directly
+            contact us through this platform,
+        </p>
+        <div class=""><a href="/contact/" class="btn btn-outline-dark mb-5">Contact us</a></div>
+    </div>
+</div>
+{% else %}
+<div class="container text-center mt-5" >
+  <div class="row">
+    <h1>Please Login to read about us</h1>
+  </div>
+</div>
+{% endif %}
+{% endblock body %}
